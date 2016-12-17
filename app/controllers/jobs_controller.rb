@@ -1,19 +1,25 @@
 class JobsController < ApplicationController
-  before_action :set_job, only: [:show, :update, :destroy]
+  before_action :set_job, only: [:show, :update, :set_active]
 
-  # GET /jobs
   def index
     @jobs = Job.all
-
     render json: @jobs
   end
 
-  # GET /jobs/1
+  def page
+    items_per_page = params.has_key?(:per) ? params[:per] : 10
+    page = params.has_key?(:page) ? params[:page] : 1
+
+    offset_value = (page - 1) * items_per_page
+
+    @paginated_jobs = Job.all.offset(offset_value).limit(items_per_page)
+    render json: @paginated_jobs
+  end
+
   def show
     render json: @job
   end
 
-  # POST /jobs
   def create
     @job = Job.new(job_params)
 
@@ -24,7 +30,6 @@ class JobsController < ApplicationController
     end
   end
 
-  # PATCH/PUT /jobs/1
   def update
     if @job.update(job_params)
       render json: @job
@@ -33,19 +38,27 @@ class JobsController < ApplicationController
     end
   end
 
-  # DELETE /jobs/1
+  def set_active
+    if params.has_key?(:active)
+      @job.update(active: params[:active])
+      render json: @job, status: :ok
+    else
+      render json: 'Error: Active value not defined.', status: :bad_request
+    end
+  end
+
   def destroy
-    render json: 'Operation not supported.'
+    render json: 'Error: Operation not supported.', status: :bad_request
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
+
     def set_job
       @job = Job.find(params[:id])
     end
 
-    # Only allow a trusted parameter "white list" through.
     def job_params
-      params.require(:job).permit(:title, :description, :active)
+      params.require(:job).permit(:title, :description, :active, :category, :keywords)
     end
+
 end
