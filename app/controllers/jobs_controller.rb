@@ -24,10 +24,17 @@ class JobsController < ApplicationController
     @job = Job.new(job_params)
 
     if @job.save
+      @job.create_category(params[:job][:category]) if params[:job].has_key?(:category)
+      @job.keywords.create(params[:job][:keywords]) if params[:job].has_key?(:keywords)
+      @job.create_contract(params[:job][:contract]) if params[:job].has_key?(:contract)
+    end
+
+    if @job.errors.blank?
       render json: @job, status: :created, location: @job
     else
       render json: @job.errors, status: :unprocessable_entity
     end
+
   end
 
   def update
@@ -58,7 +65,11 @@ class JobsController < ApplicationController
     end
 
     def job_params
-      params.require(:job).permit(:title, :description, :active, :category, :keywords)
+      params.require(:job).permit(:title, :description, :active,
+                                  contract: [:id, :type],
+                                  category: [:id, :title],
+                                  keywords_attributes: [:id, :name]
+                                  )
     end
 
 end
