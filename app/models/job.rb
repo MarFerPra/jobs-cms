@@ -4,5 +4,6 @@ class Job < ApplicationRecord
   belongs_to :contract, optional: true
   has_many :applications
 
-  accepts_nested_attributes_for :keywords
+  accepts_nested_attributes_for :keywords, :category, :contract
+
 end

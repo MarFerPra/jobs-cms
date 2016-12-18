@@ -30,7 +30,7 @@ ActiveRecord::Schema.define(version: 20161217180400) do
   end
 
   create_table "contracts", force: :cascade do |t|
-    t.string   "type"
+    t.string   "type_of"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
