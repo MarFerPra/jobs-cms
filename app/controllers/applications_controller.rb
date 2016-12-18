@@ -1,51 +1,46 @@
 class ApplicationsController < ApplicationController
-  before_action :set_application, only: [:show, :update, :destroy]
+  before_action :set_application, only: [:show]
+  before_action :set_job, only: [:create]
 
-  # GET /applications
   def index
     @applications = Application.all
 
     render json: @applications
   end
 
-  # GET /applications/1
   def show
     render json: @application
   end
 
-  # POST /applications
   def create
     @application = Application.new(application_params)
 
-    if @application.save
-      render json: @application, status: :created, location: @application
+    if @job.present? && @application.save
+
+      if @job.active
+        ApplicationsMailer.new_application(@application).deliver
+        render json: @application, status: :created, location: @application
+      else
+        render json: 'Error: Job deactivated.', status: :unprocessable_entity
+      end
+
     else
       render json: @application.errors, status: :unprocessable_entity
     end
-  end
 
-  # PATCH/PUT /applications/1
-  def update
-    if @application.update(application_params)
-      render json: @application
-    else
-      render json: @application.errors, status: :unprocessable_entity
-    end
-  end
-
-  # DELETE /applications/1
-  def destroy
-    @application.destroy
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
+
     def set_application
       @application = Application.find(params[:id])
     end
 
-    # Only allow a trusted parameter "white list" through.
+    def set_job
+      @job = Job.find(params[:application][:job_id])
+    end
+
     def application_params
-      params.require(:application).permit(:name, :email, :cover, :cv)
+      params.require(:application).permit(:name, :email, :cover, :cv, :job_id)
     end
 end
