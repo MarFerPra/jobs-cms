@@ -27,12 +27,7 @@ module JobsCms
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
 
-  config.middleware.insert_before 0, "Rack::Cors" do
-    allow do
-      origins '*'
-      resource '*', :headers => :any, :methods => [:get, :post]
-    end
-  end
+    config.middleware.use Rack::Attack
 
   end
 end
