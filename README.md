@@ -11,7 +11,34 @@ Provides a way to manage jobs using categories and keywords.
 With rbenv or any other Ruby version manager, install `Ruby` (>= 2.3.3), `rails` and `bundle` gems.
 Once into the project's directory, type `bundle` on a terminal to install all dependencies.
 
-After that, use `rake db:migrate` to configure the database.
+Use `rake db:migrate` to configure the database.
+
+In order to provide encryption and email functionality, it's required to create the file `/config/secrets.yml` with the following content:  
+```
+development:
+  secret_key_base: <your-server-secret-key>
+  mailgun_api_key: '<your-mailgun-api-key>'
+  mailgun_domain: '<your-mailgun-mailgun-domain>'
+  mailgun_receiver: '<your-mailgun-email-receiver>'
+
+test:
+  secret_key_base: <your-server-secret-key>
+  mailgun_api_key: '<your-mailgun-api-key>'
+  mailgun_domain: '<your-mailgun-mailgun-domain>'
+  mailgun_receiver: '<your-mailgun-email-receiver>'
+
+production:
+  secret_key_base: <%= ENV["SECRET_KEY_BASE"] %>
+  mailgun_api_key: <%= ENV["MAILGUN_API_KEY"] %>
+  mailgun_domain: <%= ENV["MAILGUN_DOMAIN"] %>
+  mailgun_receiver: <%= ENV["MAILGUN_RECEIVER"] %>
+```
+
+To obtain a new server's secret key we can use the rake task:  
+`bundle exec rake secret`  
+This will return a secure value to use as secret key.
+
+On the other hand, mailgun's variables are provided on [Mailgun's website](https://mailgun.com) after registration.
 
 ## Usage
 
