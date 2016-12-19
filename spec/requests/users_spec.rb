@@ -1,10 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe "Users", type: :request do
-  describe "GET /users" do
-    it "works! (now write some real specs)" do
-      get users_path
-      expect(response).to have_http_status(200)
+  describe "POST /users" do
+    it "creates a user" do
+      post users_path, user: {name: 'Test User', email: 'test@test.com', password: 'test'}
+      expect(response).to have_http_status(:created)
     end
   end
 end

@@ -7,13 +7,13 @@ class JobsController < ApplicationController
   end
 
   def page
-    items_per_page = params.has_key?(:per) ? params[:per] : 10
-    page = params.has_key?(:page) ? params[:page] : 1
+    items_per_page = params.has_key?(:per) ? params[:per].to_i : 10
+    page = params.has_key?(:page) ? params[:page].to_i : 1
 
     offset_value = (page - 1) * items_per_page
 
     @paginated_jobs = Job.all.offset(offset_value).limit(items_per_page)
-    render json: @paginated_jobs
+    render json: @paginated_jobs, status: :ok
   end
 
   def show

@@ -52,13 +52,6 @@ RSpec.describe ApplicationsController, type: :controller do
     end
   end
 
-  describe "GET #new" do
-    it "assigns a new application as @application" do
-      get :new, params: {}, session: valid_session
-      expect(assigns(:application)).to be_a_new(Application)
-    end
-  end
-
   describe "GET #edit" do
     it "assigns the requested application as @application" do
       application = Application.create! valid_attributes
