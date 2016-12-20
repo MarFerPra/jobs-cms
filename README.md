@@ -77,7 +77,7 @@ Send a POST request to `/users` with a user object with its proper attributes, s
 
 ![Creating user](http://i1268.photobucket.com/albums/jj576/marcofp0/jobs-cms/creating-user_zpskydbrsby.png)
 
-After that you'll be able to authenticate using that email and password as credentials
+After that you'll be able to authenticate using that email and password as credentials.
 
 #### Authentication
 
@@ -90,7 +90,7 @@ Add the token as: `Authorization: <token>` in the header.
 
 #### Creating a job object with nested attributes (Contract, Category and Keywords)
 
-Send a POST request to `/jobs` with a job object a parameter, with its proper attributes and adding `category_attributes`, `contract_attributes` or `keywords_attributes[]` to create each model attached to the job. Such as:  
+Send a POST request to `/jobs` with a job object as parameter, with its proper attributes and adding `category_attributes`, `contract_attributes` or `keywords_attributes[]` to create each model attached to the job. Such as:  
 
 ![Creating job with nested attributes](http://i1268.photobucket.com/albums/jj576/marcofp0/jobs-cms/nested-attr_zps1eoyyvtp.png)
 
