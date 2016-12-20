@@ -126,7 +126,7 @@ Those variables can be defined on `/config/secrets.yml` on a development environ
 
 In order to provide token-based authentication, I've used `bcrypt` to store hashed passwords on the database and `jwt` to generate authentication tokens based on server's secret key.  
 
-Once the login credentials are checked (email and password), a token is generated using user's id and server's secrey key.  
+Once the login credentials are checked (email and password), a token is generated using user's id and server's secret key.  
 
 By adding this token on the header of each request a client can identify himself as a registered user.
 
