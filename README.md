@@ -69,6 +69,31 @@ On the other hand, mailgun's variables are provided on [Mailgun's website](https
 - GET `/applications/:id`: Get application
 - POST `/applications`: Create application, requires job_id. If job's active sends an email as notification, otherwise returns an error message.
 
+## API Usage
+
+#### Register a User
+
+Send a POST request to `/users` with a user object with its proper attributes, such as:
+
+![Creating user](http://i1268.photobucket.com/albums/jj576/marcofp0/jobs-cms/creating-user_zpskydbrsby.png)
+
+After that you'll be able to authenticate using that email and password as credentials
+
+#### Authentication
+
+Send a POST request to `/authenticate` with `email` and `password` parameters.
+As a response, you'll receive an authorization token to add to the header of the following requests.
+
+![Authentication](http://i1268.photobucket.com/albums/jj576/marcofp0/jobs-cms/auth_zpsf0b4px1t.png)
+
+Add the token as: `Authorization: <token>` in the header.
+
+#### Creating a job object with nested attributes (Contract, Category and Keywords)
+
+Send a POST request to `/jobs` with a job object a parameter, with its proper attributes and adding `category_attributes`, `contract_attributes` or `keywords_attributes[]` to create each model attached to the job. Such as:  
+
+![Creating job with nested attributes](http://i1268.photobucket.com/albums/jj576/marcofp0/jobs-cms/nested-attr_zps1eoyyvtp.png)
+
 ## Implementation
 
 #### Models
